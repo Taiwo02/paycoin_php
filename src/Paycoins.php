@@ -3,29 +3,25 @@
 namespace Paycoin\Paycoins;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Http;
 
 class Paycoins 
 {
     public static function getInvoinces()
     {
-       $client = new Client([
-           'base_uri' => 'https://africa-crypto.herokuapp.com/'
-       ]); 
-       try {
-           $res = $client->request('GET','api/invoices',[
-                "headers" =>[
-                    'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
-                    'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+        try {
+          $headers = [
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
+            'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+    
+          ];
+           $response = Http::withHeaders(
+             $headers
+         )->get('https://africa-crypto.herokuapp.com/api/invoices');
 
-                ]
-                ]);
-                echo response()->json([$res]);
-                return response()->json([
-                    'code' => $res->getStatusCode(),
-                    'message' => $res->getReasonPhrase(),
-                    'datas' => $res->getBody(),
+           return response()->json( json_decode($response->body() ));
 
-                ]);
        } catch (GuzzleException $e) {
            return response()->json([
                     'error' => $e->getMessage()
@@ -35,27 +31,21 @@ class Paycoins
 
     public static function getInvoince(string $id, ?string $dimension = null)
     {
-       $client = new Client([
-           'base_uri' => 'https://africa-crypto.herokuapp.com/'
-       ]); 
         if ($dimension) {
             $json['dimension'] = $dimension;
         }
        try {
-           $res = $client->request('GET','api/invoice_details/'.$id,[
-                "headers" =>[
-                    'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
-                    'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+        $headers = [
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
+            'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+    
+          ];
+           $response = Http::withHeaders(
+             $headers
+         )->get('https://africa-crypto.herokuapp.com/api/invoice_details/'.$id);
 
-                ]
-                ]);
-                echo response()->json([$res]);
-                return response()->json([
-                    'code' => $res->getStatusCode(),
-                    'message' => $res->getReasonPhrase(),
-                    'datas' => $res->getBody(),
+           return response()->json( json_decode($response->body() ));
 
-                ]);
        } catch (GuzzleException $e) {
            return response()->json([
                     'error' => $e->getMessage()
@@ -67,32 +57,30 @@ class Paycoins
        $client = new Client([
            'base_uri' => 'https://africa-crypto.herokuapp.com/'
        ]); 
-        $json = [
-            'amount' => $amount,
-            'currency' => $currency,
-            'redirect_url' => $redirect_url,
-             'customer' => $customer,
-             'customization'  => $customization,
+        $json = (object) [
+            
 
         ];
         if ($dimension) {
             $json['dimension'] = $dimension;
         }
        try {
-           $res = $client->request('POST','api/invoice',[
-                'json'=>$json,
-                "headers" =>[
-                    'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
-                    'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
-
-                ]
-                ]);
-                return response()->json([
-                    'code' => $res->getStatusCode(),
-                    'message' => $res->getReasonPhrase(),
-
-
-                ]);
+        $headers = [
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
+            'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+    
+          ];
+           $response = Http::withHeaders(
+             $headers
+         )->post('https://africa-crypto.herokuapp.com/api/invoice',[
+            'amount' => $amount,
+            'currency' => $currency,
+            'redirect_url' => $redirect_url,
+             'customer' => $customer,
+             'customization'  => $customization,
+            ]
+         );
+           return response()->json( json_decode($response->body()));
        } catch (GuzzleException $e) {
            return response()->json([
                     'error' => $e->getMessage()
