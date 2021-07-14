@@ -1,0 +1,29 @@
+{
+    "name": "paycoin/paycoin-laravel",
+    "description": "Pay coin APIs library",
+    "type": "library",
+    "require": {
+        "guzzlehttp/psr7": "2.0.x-dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taiwo Enoch",
+            "email": "enochtaiwotimothy@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload":{
+        "psr-4":{
+            "Paycoin\\Paycoins\\":"src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Paycoin\\Paycoins\\PaycoinsServiceProvider"
+            ]
+        }
+    }
+
+}
