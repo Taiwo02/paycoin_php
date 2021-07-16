@@ -12,8 +12,7 @@ class Paycoins
     {
         try {
           $headers = [
-            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
-            'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
     
           ];
            $response = Http::withHeaders(
@@ -36,8 +35,7 @@ class Paycoins
         }
        try {
         $headers = [
-            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
-            'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
     
           ];
            $response = Http::withHeaders(
@@ -66,8 +64,7 @@ class Paycoins
         }
        try {
         $headers = [
-            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY'),
-            'X-PBK-KEY' => config('paycoinConfig.X-PBK-KEY')
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
     
           ];
            $response = Http::withHeaders(
