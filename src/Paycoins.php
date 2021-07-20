@@ -50,7 +50,7 @@ class Paycoins
            ],500);
        }
     }
- public static function create_invoice(float $amount,string $currency,string $redirect_url, object $customer,object $customization, ?string $dimension = null)
+ public static function create_invoice(object $data, ?string $dimension = null)
     {
        $client = new Client([
            'base_uri' => 'https://africa-crypto.herokuapp.com/'
@@ -69,13 +69,8 @@ class Paycoins
           ];
            $response = Http::withHeaders(
              $headers
-         )->post('https://africa-crypto.herokuapp.com/api/invoice',[
-            'amount' => $amount,
-            'currency' => $currency,
-            'redirect_url' => $redirect_url,
-             'customer' => $customer,
-             'customization'  => $customization,
-            ]
+         )->post('https://africa-crypto.herokuapp.com/api/invoice',
+           $data
          );
            return response()->json( json_decode($response->body()));
        } catch (GuzzleException $e) {
