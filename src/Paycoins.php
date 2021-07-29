@@ -8,16 +8,19 @@ use Illuminate\Support\Facades\Http;
 
 class Paycoins 
 {
-    public static function getInvoinces()
+ public static $url = 'https://africa-crypto.herokuapp.com/api';
+
+    public static function weHook( ?string $currency, ?string $dimension = null)
     {
         try {
+            $currency = $currency ? $currency : "";
           $headers = [
             'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
     
           ];
            $response = Http::withHeaders(
              $headers
-         )->get('https://africa-crypto.herokuapp.com/api/invoices');
+         )->get(self::$url);
 
            return response()->json( json_decode($response->body() ));
 
@@ -28,7 +31,53 @@ class Paycoins
        }
     }
 
-    public static function getInvoince(string $id, ?string $dimension = null)
+
+
+
+    public static function exchangeRate(?string $currency = null)
+    {
+        try {
+            $currency = $currency ? $currency : "USD";
+          $headers = [
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
+    
+          ];
+           $response = Http::withHeaders(
+             $headers
+         )->get(self::$url.'/exchange-rates/'.$currency );
+
+           return response()->json( json_decode($response->body() ));
+
+       } catch (GuzzleException $e) {
+           return response()->json([
+                    'error' => $e->getMessage()
+           ],500);
+       }
+    }
+
+
+
+    public static function getInvoices()
+    {
+        try {
+          $headers = [
+            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
+    
+          ];
+           $response = Http::withHeaders(
+             $headers
+         )->get(self::$url.'/invoices');
+
+           return response()->json( json_decode($response->body() ));
+
+       } catch (GuzzleException $e) {
+           return response()->json([
+                    'error' => $e->getMessage()
+           ],500);
+       }
+    }
+
+    public static function getInvoice(string $id, ?string $dimension = null)
     {
         if ($dimension) {
             $json['dimension'] = $dimension;
@@ -40,7 +89,7 @@ class Paycoins
           ];
            $response = Http::withHeaders(
              $headers
-         )->get('https://africa-crypto.herokuapp.com/api/invoice_details/'.$id);
+         )->get(self::$url.'/invoice_details/'.$id);
 
            return response()->json( json_decode($response->body() ));
 
@@ -53,10 +102,7 @@ class Paycoins
  public static function create_invoice($data, ?string $dimension = null)
  {
         // return response()->json($data);
-       $client = new Client([
-           'base_uri' => 'https://africa-crypto.herokuapp.com/'
-        ]); 
-        
+ 
         if ($dimension) {
             $json['dimension'] = $dimension;
         }
@@ -67,7 +113,7 @@ class Paycoins
           ];
            $response = Http::withHeaders(
              $headers
-         )->post('https://africa-crypto.herokuapp.com/api/invoice',
+         )->post(self::$url.'/invoice',
              $data
          );
            return response()->json( json_decode($response->body()));

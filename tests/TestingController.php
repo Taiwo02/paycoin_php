@@ -10,11 +10,11 @@ class PaycoinController extends Controller
 
     public function invoices()
     {
-       return Paycoins::getInvoinces();
+       return Paycoins::getInvoices();
     }
     public function invoice_details()
     {
-       return Paycoins::getInvoince("INV1626354432969");
+       return Paycoins::getInvoice("INV1626354432969");
     }
 
     public function test()
