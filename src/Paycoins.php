@@ -10,30 +10,6 @@ class Paycoins
 {
  public static $url = 'https://africa-crypto.herokuapp.com/api';
 
-    public static function weHook( ?string $currency, ?string $dimension = null)
-    {
-        try {
-            $currency = $currency ? $currency : "";
-          $headers = [
-            'X-SEC-KEY' => config('paycoinConfig.X-SEC-KEY')
-    
-          ];
-           $response = Http::withHeaders(
-             $headers
-         )->get(self::$url);
-
-           return response()->json( json_decode($response->body() ));
-
-       } catch (GuzzleException $e) {
-           return response()->json([
-                    'error' => $e->getMessage()
-           ],500);
-       }
-    }
-
-
-
-
     public static function exchangeRate(?string $currency = null)
     {
         try {
