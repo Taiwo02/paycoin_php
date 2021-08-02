@@ -38,7 +38,7 @@ use Paycoin\Paycoins\Paycoins;
 
 public function getAllInvoices()
 {
-    return Paycoins::getInvoinces();
+    return Paycoins::getInvoices();
 }
 ```
 
@@ -49,7 +49,7 @@ use Paycoin\Paycoins\Paycoins;
 
 public function getInvoiceByRef()
 {
-    return Paycoins::getInvoince("INV1626354432969");
+    return Paycoins::getInvoice("INV1626354432969");
 }
 ```
 
@@ -75,5 +75,16 @@ public function createInvoice()
             ]
         ]
     );
+}
+```
+
+### Get Current Market Exchange Rates of 1 NGN to all other cryptos and fiat currencies
+
+```php
+use Paycoin\Paycoins\Paycoins;
+
+public function getExchangeRates()
+{
+    return Paycoins::exchangeRate("NGN");
 }
 ```
