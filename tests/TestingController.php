@@ -8,17 +8,27 @@ use Paycoin\Paycoins\Paycoins;
 class PaycoinController extends Controller
 {
 
-    public function invoices()
-    {
+
+   public function exchangeRate(){
+
+      return Paycoins::exchangeRate("USD");
+   }
+
+
+    public function invoices(){
+
        return Paycoins::getInvoices();
     }
-    public function invoice_details()
-    {
+
+
+    public function invoice_details(){
+
        return Paycoins::getInvoice("INV1626354432969");
     }
 
-    public function test()
-    {
+
+
+    public function createInvoice(){
         // return "Heloo";
        return Paycoins::create_invoice(
            (object)[

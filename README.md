@@ -88,6 +88,7 @@ public function getExchangeRates()
     return Paycoins::exchangeRate("NGN");
 }
 ```
+
 ## Webhooks
 Webhooks allow you to configure a URL that will be notified every time an event occurs on your account. When one of the events you subscribe to happens, paycoins will send a json object representing that event through a HTTP POST request to your webhooks URL.
 
